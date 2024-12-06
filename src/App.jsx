@@ -1,19 +1,12 @@
 import React from "react";
-import "./index.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import Home from "./pages/home";
+import { BrowserRouter } from "react-router-dom";
+import RoutesComponent from "./routes/routes.jsx";
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        {/*<Route exact path="/" component={Mens} />
-        <Route exact path="/" component={Womens} />
-        <Route component={PageNotFound} />*/}
-      </Switch>
-    </Router>
+    <BrowserRouter>
+      <RoutesComponent />
+    </BrowserRouter>
   );
 }
 

@@ -1,9 +1,10 @@
+// eslint-disable-next-line no-unused-vars
 import React from "react";
-import FondoRojo from "./assets/FondoRojo.jpg";
-import Navbar from "./components/navbar.jsx";
-import Hero from "./components/hero.jsx";
-import CardsContainer from "./components/CardsContainer.jsx";
-import Footer from "./components/Footer.jsx";
+import FondoRojo from "../assets/FondoRojo.jpg";
+import Navbar from "../components/navbar.jsx";
+import Hero from "../components/hero.jsx";
+import CardsContainer from "../components/CardsContainer.jsx";
+import Footer from "../components/Footer.jsx";
 
 const Home = () => {
   return (
