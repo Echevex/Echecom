@@ -1,0 +1,52 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #f30f0f;
+}
+
+.navbar__logo img {
+  height: 70px;
+
+}
+
+.navbar__menu ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar__menu li {
+  margin: 0 15px;
+}
+
+.navbar__menu a {
+  text-decoration: none;
+  color: #0a0404;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.navbar__menu a:hover {
+  color: #f80015;
+}
+
+.navbar__cart {
+  position: relative;
+}
+
+.navbar__cart::after {
+  content: '0';
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background-color: #ff0000;
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
