@@ -1,39 +1,20 @@
-import React from 'react';
-import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import FondoRojo from './assets/FondoRojo.jpg';
-import Navbar from './components/navbar.jsx';
-import Hero from './components/hero.jsx';
-import CardsContainer from './components/CardsContainer.jsx';
-import Footer from './components/Footer.jsx';
+import React from "react";
+import "./index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Home from "./pages/home";
 
-
-
-const App = () => {
+function App() {
   return (
-    <div
-      style={{
-        backgroundImage: `url(${FondoRojo})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <Navbar />
-      <Hero />
-      <CardsContainer />
-      <Footer/>
-    
-    
-      <main style={{ flex: 1 }}>
-        {
-        }
-      </main>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        {/*<Route exact path="/" component={Mens} />
+        <Route exact path="/" component={Womens} />
+        <Route component={PageNotFound} />*/}
+      </Switch>
+    </Router>
   );
-};
+}
 
 export default App;
