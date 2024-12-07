@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Agregamos useNavigate
 import "./navbar.css";
 import logo from "../assets/logo.png";
 
+// Función para buscar productos en el localStorage
 const buscarItems = (termino) => {
   const items = JSON.parse(localStorage.getItem("products")) || [];
-
   return items.filter((item) =>
     item.name.toLowerCase().includes(termino.toLowerCase())
   );
@@ -13,31 +13,37 @@ const buscarItems = (termino) => {
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [cartCount, setCartCount] = useState(0);
   const [filteredItems, setFilteredItems] = useState([]);
+  const navigate = useNavigate(); // Inicializamos el hook useNavigate
 
   useEffect(() => {
     if (searchTerm) {
       const results = buscarItems(searchTerm);
-      console.log(results);
-
       setFilteredItems(results);
     } else {
       setFilteredItems([]);
     }
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    setCartCount(cart.length);
   }, [searchTerm]);
 
+  // Manejar el clic en un artículo de la lista de sugerencias
   const handleSelectItem = (name) => {
     setSearchTerm(name);
     setFilteredItems([]);
   };
 
+  // Función para manejar la búsqueda y redirigir a la página del detalle
   const handleSearch = () => {
-    const items = JSON.parse(localStorage.getItem("items")) || [];
+    const items = JSON.parse(localStorage.getItem("products")) || []; // Corregimos el nombre a "products"
     const selectedItem = items.find(
       (item) => item.name.toLowerCase() === searchTerm.toLowerCase()
     );
+
     if (selectedItem) {
-      alert(`El ID del ítem es: ${selectedItem.id}`);
+      // Redirigir a la página de detalle usando el id del artículo
+      navigate(`/detailItem/${selectedItem.id}`);
     } else {
       alert("Ítem no encontrado");
     }
@@ -82,7 +88,7 @@ const Navbar = () => {
             </ul>
           )}
         </div>
-        <ul>
+        <ul className="navbar__menu__list">
           <li>
             <a href="/">Inicio</a>
           </li>
@@ -90,15 +96,12 @@ const Navbar = () => {
             <a href="/Item">Catálogo</a>
           </li>
           <li>
-            <a href="/novedades">Novedades</a>
+            <a href="/Contact">Contacto</a>
           </li>
           <li>
-            <a href="/sale">Sale</a>
-          </li>
-          <li>
-            <a href="/carrito" className="navbar__cart">
-              Carrito
-            </a>
+            <Link to="/carrito" className="navbar__cart">
+              Carrito ({cartCount})
+            </Link>
           </li>
         </ul>
       </nav>

@@ -1,0 +1,109 @@
+/* Contenedor principal del formulario de contacto */
+.contact-container {
+    width: 100%;
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+  
+  /* Título de la sección de contacto */
+  .contact-container h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Descripción debajo del título */
+  .contact-container p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 40px;
+    text-align: center;
+    width: 80%;
+  }
+  
+  /* Estilo para el mensaje de confirmación */
+  .confirmation-message {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    text-align: center;
+  }
+  
+  /* Formulario */
+  .contact-form {
+    width: 100%;
+    max-width: 600px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Estilos para los labels */
+  .contact-form label {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos para los inputs y textarea */
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 1rem;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  
+  /* Efecto al poner el cursor en los inputs */
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: #ff4d4d;
+  }
+  
+  /* Estilos para el botón */
+  .contact-form button {
+    background-color: #ff4d4d;
+    color: white;
+    font-size: 1.1rem;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  /* Efecto al pasar el ratón por encima del botón */
+  .contact-form button:hover {
+    background-color: #e44d4d;
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .contact-container {
+      padding: 30px 10px;
+    }
+  
+    .contact-form {
+      width: 90%;
+    }
+  
+    .contact-form button {
+      font-size: 1rem;
+    }
+  }
+  

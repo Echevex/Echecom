@@ -7,6 +7,7 @@ import ErrorPage from "../pages/errorPage.jsx";
 import Contact from "../pages/contact.jsx";
 import DetailItem from "../pages/detailItem.jsx";
 import Items from "../pages/item.jsx";
+import Carrito from "../pages/cart.jsx";
 
 function RoutesComponent() {
   return (
@@ -16,6 +17,7 @@ function RoutesComponent() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/item" element={<Items />} />
         <Route path="/detailItem/:id" element={<DetailItem />} />
+        <Route path="/carrito" element={<Carrito />} />
     </Routes>
   );
 }
