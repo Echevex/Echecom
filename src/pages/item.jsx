@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"; // Para obtener los parámetros de la URL
+import { useParams, useNavigate } from "react-router-dom"; // Para obtener parámetros y redirigir
 import "./item.css";
 import Navbar from "../components/navbar.jsx";
 import Footer from "../components/Footer.jsx";
@@ -14,6 +14,7 @@ const initializeProducts = () => {
 const Items = () => {
   const { category } = useParams(); // Obtenemos la categoría desde la URL
   const [items, setItems] = useState([]);
+  const navigate = useNavigate(); // Hook para redirigir
 
   useEffect(() => {
     initializeProducts();
@@ -40,6 +41,11 @@ const Items = () => {
       .join(" ");
   };
 
+  // Manejar clic en una tarjeta para redirigir al detalle
+  const handleCardClick = (id) => {
+    navigate(`/detailItem/${id}`); // Redirigir al detalle del producto
+  };
+
   return (
     <div className="items-container">
       <Navbar />
@@ -51,7 +57,12 @@ const Items = () => {
       <div className="items-grid">
         {items.length > 0 ? (
           items.map((item) => (
-            <div key={item.id} className="card">
+            <div
+              key={item.id}
+              className="card"
+              onClick={() => handleCardClick(item.id)} // Redirigir al hacer clic
+              style={{ cursor: "pointer" }} // Indicador visual de que es clicable
+            >
               <img src={item.image} alt={item.name} className="card-image" />
               <div className="card-content">
                 <h3>{item.name}</h3>

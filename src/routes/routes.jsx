@@ -16,7 +16,6 @@ function RoutesComponent() {
       <Route path="/contact" element={<Contact />} />
       <Route path="/catalogo" element={<Items />} />
       <Route path="/catalogo/:category" element={<Items />} />
-
       <Route path="/detailItem/:id" element={<DetailItem />} />
       <Route path="/carrito" element={<Carrito />} />
     </Routes>
