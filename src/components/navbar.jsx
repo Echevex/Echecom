@@ -76,20 +76,20 @@ const Navbar = () => {
             onMouseLeave={() => setShowSubmenu(false)}
             className="navbar__catalog"
           >
-            <Link to="/Item">Catálogo</Link>
+            <Link to="/catalogo">Catálogo</Link>
             {showSubmenu && (
               <ul className="navbar__submenu">
                 <li>
-                  <Link to="/buzos">Buzos</Link>
+                  <Link to="/catalogo/buzos">Buzos</Link>
                 </li>
                 <li>
-                  <Link to="/remeras">Remeras</Link>
+                  <Link to="/catalogo/remeras">Remeras</Link>
                 </li>
                 <li>
-                  <Link to="/pantalones">Pantalones</Link>
+                  <Link to="/catalogo/pantalones">Pantalones</Link>
                 </li>
                 <li>
-                  <Link to="/shorts">Shorts</Link>
+                  <Link to="/catalogo/shorts">Shorts</Link>
                 </li>
               </ul>
             )}
