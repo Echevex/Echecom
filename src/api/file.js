@@ -3,7 +3,7 @@ import Buzo2 from '../assets/Buzo2.jpg';
 import Rem1 from '../assets/Rem1.jpg';
 import Rem2 from '../assets/Rem2.jpg';
 
-const products = [
+export const products = [
   {
     id: 1,
     name: "Buzo Yuyu Hakusho Verde",
@@ -34,13 +34,30 @@ const products = [
   },
 ];
 
-// Función para simular una llamada a la API
-const fetchProducts = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(products);
-    }, 1000); // Simula un retraso de 1 segundo
-  });
+
+export const saveProductsToLocalStorage = (products) => {
+  localStorage.setItem("products", JSON.stringify(products));
+  console.log("Productos guardados en Local Storage.");
 };
 
-export { fetchProducts };
+export const loadProductsFromLocalStorage = () => {
+  const storedProducts = localStorage.getItem("products");
+  if (storedProducts) {
+    console.log("Productos cargados desde Local Storage.");
+    return JSON.parse(storedProducts);
+  } else {
+    console.log("No hay productos en Local Storage.");
+    return [];
+  }
+};
+
+export const findProductById = (id) => {
+  const products = loadProductsFromLocalStorage();
+  const product = products.find((item) => item.id === id);
+  if (product) {
+    console.log(`Producto encontrado: ${product.name}`);
+  } else {
+    console.log(`No se encontró ningún producto con ID: ${id}`);
+  }
+  return product;
+};
