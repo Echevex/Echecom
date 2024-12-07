@@ -1,5 +1,11 @@
 import Buzo1 from '../assets/Buzo1.jpg';
 import Buzo2 from '../assets/Buzo2.jpg';
+import Buzo3 from '../assets/Buzo3.webp';
+import Buzo4 from '../assets/Buzo4.webp';
+import Buzo5 from '../assets/Buzo5.webp';
+import Buzo6 from '../assets/Buzo6.webp';
+import Buzo7 from '../assets/Buzo7.webp';
+import Buzo8 from '../assets/Buzo8.webp';
 import Rem1 from '../assets/Rem1.jpg';
 import Rem2 from '../assets/Rem2.jpg';
 
@@ -16,6 +22,48 @@ export const products = [
     name: "Buzo Madara Bordado Negro",
     price: "$4500",
     image: Buzo2,
+    category: "Buzos",
+  },
+  {
+    id: 5,
+    name: "Buzo Yuyu Hakusho Verde",
+    price: "$5500",
+    image: Buzo3,
+    category: "Buzos",
+  },
+  {
+    id: 6,
+    name: "Buzo Madara Bordado Negro",
+    price: "$4500",
+    image: Buzo4,
+    category: "Buzos",
+  },
+  {
+    id: 7,
+    name: "Buzo Yuyu Hakusho Verde",
+    price: "$5500",
+    image: Buzo5,
+    category: "Buzos",
+  },
+  {
+    id: 8,
+    name: "Buzo Madara Bordado Negro",
+    price: "$4500",
+    image: Buzo6,
+    category: "Buzos",
+  },
+  {
+    id: 9,
+    name: "Buzo Yuyu Hakusho Verde",
+    price: "$5500",
+    image: Buzo7,
+    category: "Buzos",
+  },
+  {
+    id: 10,
+    name: "Buzo Madara Bordado Negro",
+    price: "$4500",
+    image: Buzo8,
     category: "Buzos",
   },
   {

@@ -3,6 +3,7 @@
     text-align: center;
   }
   
+  
   .items-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -24,8 +25,8 @@
   }
   
   .card-image {
-    width: 100%;
-    height: 200px;
+    width:auto;
+    height: 250px;
     object-fit: cover;
   }
   
@@ -36,7 +37,7 @@
   .card-content h3 {
     margin: 0 0 10px;
     font-size: 1.2rem;
-    color: #333;
+    color: #050505;
   }
   
   .card-content p {

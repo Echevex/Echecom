@@ -7,11 +7,27 @@ const Navbar = () => {
   return (
     <header className="navbar">
       <div className="navbar__logo">
+        <Link to="/">
         <img src={logo} alt="Logo" />
+        </Link>
+        
       </div>
       <nav className="navbar__menu">
+
+
+      <div className="navbar-search">
+        <span className="navbar-search-icon">&#128269;</span> {/* Lupa */}
+        <input
+          type="text"
+          placeholder="Buscar"
+          className="navbar-search-input"
+        />
+        <span className="navbar-search-clear">&#x2715;</span> {/* Cruz */}
+      </div>
+
+      
         <ul>
-          <li><a href="/inicio">Inicio</a></li>
+          <li><a href="/">Inicio</a></li>
           <li><a href="/Item">Catalogo</a></li>
           <li><a href="/novedades">Novedades</a></li>
           <li><a href="/sale">Sale</a></li>
