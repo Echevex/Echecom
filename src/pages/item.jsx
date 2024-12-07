@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";  // Para obtener los parámetros de la URL
 import "./item.css"; 
 import Navbar from "../components/navbar.jsx";
 import Footer from "../components/Footer.jsx";
-import { loadProductsFromLocalStorage, saveProductsToLocalStorage, products} from "../api/file";
+import { loadProductsFromLocalStorage, saveProductsToLocalStorage, products } from "../api/file";
 
 const initializeProducts = () => {
   if (!localStorage.getItem("products")) {
@@ -11,18 +12,27 @@ const initializeProducts = () => {
 };
 
 const Items = () => {
+  const { category } = useParams();  // Obtenemos la categoría desde la URL
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     initializeProducts();
     const storedProducts = loadProductsFromLocalStorage();
-    setItems(storedProducts);
-  }, []);
+
+    if (category) {
+      // Filtramos los productos por la categoría si existe
+      const filteredItems = storedProducts.filter((item) => item.category.toLowerCase() === category.toLowerCase());
+      setItems(filteredItems);
+    } else {
+      // Si no hay categoría, mostramos todos los productos
+      setItems(storedProducts);
+    }
+  }, [category]);  // Dependemos de la categoría para recargar los productos
 
   return (
     <div className="items-container">
-    <Navbar />
-      <h1>Lista de Productos</h1>
+      <Navbar />
+      <h1>{category ? `${category.charAt(0).toUpperCase() + category.slice(1)} Products` : "Todos los productos"}</h1>
       <div className="items-grid">
         {items.length > 0 ? (
           items.map((item) => (
@@ -36,11 +46,10 @@ const Items = () => {
             </div>
           ))
         ) : (
-          <p>No hay productos disponibles.</p>
+          <p>No hay productos disponibles en esta categoría.</p>
         )}
       </div>
-      
-    <Footer />
+      <Footer />
     </div>
   );
 };

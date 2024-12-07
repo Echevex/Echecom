@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Agregamos useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import "./navbar.css";
 import logo from "../assets/logo.png";
 
-// Función para buscar productos en el localStorage
+// Función para buscar productos
 const buscarItems = (termino) => {
   const items = JSON.parse(localStorage.getItem("products")) || [];
   return items.filter((item) =>
@@ -15,7 +15,8 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [cartCount, setCartCount] = useState(0);
   const [filteredItems, setFilteredItems] = useState([]);
-  const navigate = useNavigate(); // Inicializamos el hook useNavigate
+  const [showSubmenu, setShowSubmenu] = useState(false); // Para controlar el submenú
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (searchTerm) {
@@ -28,21 +29,13 @@ const Navbar = () => {
     setCartCount(cart.length);
   }, [searchTerm]);
 
-  // Manejar el clic en un artículo de la lista de sugerencias
-  const handleSelectItem = (name) => {
-    setSearchTerm(name);
-    setFilteredItems([]);
-  };
-
-  // Función para manejar la búsqueda y redirigir a la página del detalle
+  // Función para manejar la búsqueda
   const handleSearch = () => {
-    const items = JSON.parse(localStorage.getItem("products")) || []; // Corregimos el nombre a "products"
+    const items = JSON.parse(localStorage.getItem("products")) || [];
     const selectedItem = items.find(
       (item) => item.name.toLowerCase() === searchTerm.toLowerCase()
     );
-
     if (selectedItem) {
-      // Redirigir a la página de detalle usando el id del artículo
       navigate(`/detailItem/${selectedItem.id}`);
     } else {
       alert("Ítem no encontrado");
@@ -73,30 +66,36 @@ const Navbar = () => {
             &#x2715;
           </span>
           <button onClick={handleSearch}>Buscar</button>
-
-          {filteredItems.length > 0 && (
-            <ul className="autocomplete-list">
-              {filteredItems.map((item) => (
-                <li
-                  key={item.id}
-                  onClick={() => handleSelectItem(item.name)}
-                  className="autocomplete-item"
-                >
-                  {item.name}
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
         <ul className="navbar__menu__list">
           <li>
-            <a href="/">Inicio</a>
+            <Link to="/">Inicio</Link>
+          </li>
+          <li
+            onMouseEnter={() => setShowSubmenu(true)}
+            onMouseLeave={() => setShowSubmenu(false)}
+            className="navbar__catalog"
+          >
+            <Link to="/Item">Catálogo</Link>
+            {showSubmenu && (
+              <ul className="navbar__submenu">
+                <li>
+                  <Link to="/buzos">Buzos</Link>
+                </li>
+                <li>
+                  <Link to="/remeras">Remeras</Link>
+                </li>
+                <li>
+                  <Link to="/pantalones">Pantalones</Link>
+                </li>
+                <li>
+                  <Link to="/shorts">Shorts</Link>
+                </li>
+              </ul>
+            )}
           </li>
           <li>
-            <a href="/Item">Catálogo</a>
-          </li>
-          <li>
-            <a href="/Contact">Contacto</a>
+            <Link to="/contact">Contacto</Link>
           </li>
           <li>
             <Link to="/carrito" className="navbar__cart">

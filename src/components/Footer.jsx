@@ -28,7 +28,7 @@ return (
                 </div>
                 <div className="sb__footer-links-div">
                     <h4>Acerca de Nosotros</h4>
-                    < a href="/AboutUs">
+                    < a href="/Contact">
                        <p>Contáctanos</p>
                     </a>
                     < a href="/AboutUs">
