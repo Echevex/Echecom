@@ -49,6 +49,7 @@ const Items = () => {
   return (
     <div className="items-container">
       <Navbar />
+      <div className="items-container">
       <h1>
         {category
           ? `Productos de ${formatCategoryName(category)}`
@@ -80,6 +81,7 @@ const Items = () => {
               : "No hay productos disponibles."}
           </p>
         )}
+      </div>
       </div>
       <Footer />
     </div>
