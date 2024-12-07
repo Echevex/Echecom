@@ -12,7 +12,7 @@ const Navbar = () => {
       <nav className="navbar__menu">
         <ul>
           <li><a href="/inicio">Inicio</a></li>
-          <li><a href="/categorias">Categorías</a></li>
+          <li><a href="/Item">Catalogo</a></li>
           <li><a href="/novedades">Novedades</a></li>
           <li><a href="/sale">Sale</a></li>
           <li><a href="/carrito" className="navbar__cart">Carrito</a></li>
