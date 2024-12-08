@@ -1,0 +1,3 @@
+[submodule "Echecom"]
+	path = Echecom
+	url = https://github.com/Echevex/Echecom.git
