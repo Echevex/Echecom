@@ -4,28 +4,28 @@ import { db } from "../services/firebase/index.js";
 import { doc, getDoc } from "firebase/firestore";
 import Navbar from "../components/navbar.jsx";
 import Footer from "../components/Footer.jsx";
-import "./detailProduct.css"; // Importa el CSS con el nombre correcto
+import "./detailProduct.css"; 
 
 const DetailItem = () => {
-  const { id } = useParams(); // Obtener el ID desde la URL
-  const [item, setItem] = useState(null); // Estado para almacenar los detalles del producto
-  const [loading, setLoading] = useState(true); // Estado para controlar el cargando
+  const { id } = useParams();
+  const [item, setItem] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const docRef = doc(db, "productos", id); // Referencia al documento en Firebase
+        const docRef = doc(db, "productos", id);
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
-          setItem({ id: docSnap.id, ...docSnap.data() }); // Guardar los datos del producto en el estado
+          setItem({ id: docSnap.id, ...docSnap.data() }); 
         } else {
           console.error("No se encontró el producto");
         }
       } catch (error) {
         console.error("Error al obtener el producto:", error);
       } finally {
-        setLoading(false); // Finalizar el cargando
+        setLoading(false); 
       }
     };
 
@@ -33,24 +33,24 @@ const DetailItem = () => {
   }, [id]);
 
   const handleAddToCart = () => {
-    // Obtener el carrito actual desde localStorage o un array vacío si no existe
+
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // Verificar si el producto ya existe en el carrito
+    
     const existingProduct = cart.find((item) => item.id === id);
 
     if (existingProduct) {
-      // Si el producto ya está en el carrito, incrementar la cantidad
+     
       existingProduct.quantity += 1;
     } else {
-      // Si el producto no está en el carrito, agregarlo con cantidad 1
+    1
       cart.push({ ...item, quantity: 1 });
     }
 
-    // Guardar el carrito actualizado en localStorage
+   
     localStorage.setItem("cart", JSON.stringify(cart));
 
-    // Mostrar un mensaje o notificación (opcional)
+    
     alert(`${item.name} ha sido agregado al carrito.`);
   };
 
@@ -75,7 +75,7 @@ const DetailItem = () => {
           <p className="detail-product__price">Precio: ${item.price}</p>
           <button 
             className="detail-product__add-to-cart" 
-            onClick={handleAddToCart} // Llamamos a la función al hacer clic
+            onClick={handleAddToCart} 
           >
             Agregar al carrito
           </button>

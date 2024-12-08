@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { db } from "../services/firebase/index";  // Asegúrate de que tu configuración de Firebase esté correctamente importada
+import { db } from "../services/firebase/index"; 
 import { collection, getDocs, query, where } from "firebase/firestore";
 import "./navbar.css";
 import logo from "../assets/logo.png";
 
-// Función para obtener los productos desde Firebase
 const fetchItemsFromFirebase = async (searchTerm = "") => {
-  const productsRef = collection(db, "products"); // Asegúrate de que "products" sea el nombre correcto de tu colección
+  const productsRef = collection(db, "products"); 
   let q;
 
   if (searchTerm) {
@@ -17,7 +16,7 @@ const fetchItemsFromFirebase = async (searchTerm = "") => {
       where("name", "<=", searchTerm + "\uf8ff")
     );
   } else {
-    q = query(productsRef); // Si no hay término de búsqueda, obtiene todos los productos
+    q = query(productsRef);
   }
 
   const querySnapshot = await getDocs(q);
@@ -33,10 +32,10 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [cartCount, setCartCount] = useState(0);
   const [filteredItems, setFilteredItems] = useState([]);
-  const [showSubmenu, setShowSubmenu] = useState(false); // Para controlar el submenú
+  const [showSubmenu, setShowSubmenu] = useState(false); 
   const navigate = useNavigate();
 
-  // Cargar productos desde Firebase
+
   useEffect(() => {
     const fetchData = async () => {
       const products = await fetchItemsFromFirebase(searchTerm);
@@ -48,10 +47,10 @@ const Navbar = () => {
     setCartCount(cart.length);
   }, [searchTerm]);
 
-  // Función para manejar la búsqueda
+
   const handleSearch = async () => {
     const products = await fetchItemsFromFirebase(searchTerm);
-    setFilteredItems(products); // Actualiza los resultados al presionar "Buscar"
+    setFilteredItems(products); 
   };
 
   return (
@@ -80,7 +79,6 @@ const Navbar = () => {
           <button onClick={handleSearch}>Buscar</button>
         </div>
 
-        {/* Mostrar los resultados de búsqueda */}
         {filteredItems.length > 0 && (
           <ul className="navbar-search-results">
             {filteredItems.map((item) => (

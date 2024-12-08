@@ -1,12 +1,13 @@
-// eslint-disable-next-line no-unused-vars
+
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "../pages/home.jsx";
 import ErrorPage from "../pages/errorPage.jsx";
 import Contact from "../pages/contact.jsx";
 import DetailItem from "../pages/detailItem.jsx";
-import Items from "../pages/item.jsx"; // Asegúrate de que Items es el componente que filtra por categoría
+import Items from "../pages/item.jsx"; 
 import Carrito from "../pages/cart.jsx";
+import Pago from "../pages/pago.jsx";
 
 function RoutesComponent() {
   return (
@@ -18,6 +19,8 @@ function RoutesComponent() {
       <Route path="/catalogo/:category" element={<Items />} />
       <Route path="/detailItem/:id" element={<DetailItem />} />
       <Route path="/carrito" element={<Carrito />} />
+      <Route path="/pago" element={<Pago />} /> 
+
     </Routes>
   );
 }

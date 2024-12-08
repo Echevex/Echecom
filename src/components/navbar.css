@@ -1,4 +1,4 @@
-/* Navbar contenedor general */
+
 .navbar {
   display: flex;
   align-items: center;
@@ -11,12 +11,11 @@
   box-sizing: border-box;
 }
 
-/* Logo */
 .navbar__logo img {
   height: 70px;
 }
 
-/* Barra de búsqueda */
+
 .navbar-search {
   display: flex;
   align-items: center;
@@ -26,12 +25,12 @@
   padding: 5px 10px;
   width: 450px;
   box-shadow: 0 2px 4px rgba(247, 0, 0, 0.582);
-  margin-left: 20px; /* Para separar un poco del logo */
-  margin-right: 20px; /* Para separar un poco de los enlaces */
-  flex-grow: 1; /* Asegura que ocupe el espacio disponible */
+  margin-left: 20px; 
+  margin-right: 20px;
+  flex-grow: 1; 
 }
 
-/* Input de búsqueda */
+
 .navbar-search-input {
   flex-grow: 1;
   border: none;
@@ -58,12 +57,12 @@
   color: #000000;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
   cursor: pointer;
-  display: none; /* Por defecto está oculto */
+  display: none; 
 }
 
 .navbar-search:hover .navbar-search-clear,
 .navbar-search:focus-within .navbar-search-clear {
-  display: inline; /* Se muestra al interactuar con el buscador */
+  display: inline; 
 }
 
 .navbar-search button {
@@ -76,7 +75,7 @@
   font-size: 14px;
 }
 
-/* Menú de navegación */
+
 .navbar__menu__list {
   display: flex;
   list-style: none;
@@ -85,7 +84,7 @@
 }
 
 .navbar__menu__list li {
-  position: relative; /* Necesario para posicionar el submenú */
+  position: relative; 
   margin: 0 15px;
 }
 
@@ -114,7 +113,7 @@
 .navbar__submenu {
   display: block;
   position: absolute;
-  top: 100%; /* Muestra el submenú justo debajo */
+  top: 100%; 
   left: 0;
   background-color: #fff;
   border: 1px solid #ddd;

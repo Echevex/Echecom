@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { db } from "../services/firebase"; // Asegúrate de tener correctamente configurado Firebase
+import { db } from "../services/firebase"; 
 import { doc, getDoc } from "firebase/firestore"; 
+import { useNavigate } from "react-router-dom";  // Usamos useNavigate para redirigir
 import Navbar from "../components/navbar.jsx";
 import Footer from "../components/Footer.jsx";
 import "./cart.css";
@@ -8,23 +9,23 @@ import "./cart.css";
 const Carrito = () => {
   const [cart, setCart] = useState([]); 
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate(); // Usamos navigate para redirigir a la página de pago
 
   useEffect(() => {
     const fetchCartDetails = async () => {
       const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
 
-      // Para cada producto del carrito, obtener más información desde Firebase
       const cartWithDetails = await Promise.all(
         cartItems.map(async (item) => {
-          const docRef = doc(db, "productos", item.id); // Accedemos al producto por ID
+          const docRef = doc(db, "productos", item.id); 
           const docSnap = await getDoc(docRef);
           if (docSnap.exists()) {
             return {
               ...item, 
-              ...docSnap.data()  // Obtenemos los datos adicionales desde Firebase
+              ...docSnap.data()  
             };
           }
-          return item;  // Si no existe el producto en Firebase, dejamos los datos del carrito tal como están
+          return item;  
         })
       );
 
@@ -38,11 +39,15 @@ const Carrito = () => {
   const handleRemove = (id) => {
     const updatedCart = cart.filter((item) => item.id !== id);
     setCart(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart)); // Guardamos el carrito actualizado
+    localStorage.setItem("cart", JSON.stringify(updatedCart)); 
   };
 
   const getTotal = () => {
     return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  };
+
+  const handleCheckout = () => {
+    navigate("/pago"); // Redirige a la página de pago
   };
 
   if (loading) {
@@ -75,6 +80,7 @@ const Carrito = () => {
         {cart.length > 0 && (
           <div className="carrito-total">
             <h3>Total: ${getTotal()}</h3>
+            <button onClick={handleCheckout}>Ir a pagar</button> {/* Botón de pago */}
           </div>
         )}
       </div>

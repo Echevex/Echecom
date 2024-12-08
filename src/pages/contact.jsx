@@ -10,7 +10,7 @@ const Contact = () => {
     message: "",
   });
 
-  const [isSubmitted, setIsSubmitted] = useState(false); // Estado para manejar la confirmación
+  const [isSubmitted, setIsSubmitted] = useState(false); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,21 +23,18 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Guardar el mensaje en localStorage
     localStorage.setItem("message", JSON.stringify(formData));
     console.log("Mensaje guardado en Local Storage:", formData);
 
-    // Mostrar confirmación
     setIsSubmitted(true);
 
-    // Restablecer el formulario
     setFormData({
       name: "",
       email: "",
       message: "",
     });
 
-    // Ocultar el mensaje de confirmación después de 5 segundos
+
     setTimeout(() => setIsSubmitted(false), 5000);
   };
 
@@ -48,7 +45,7 @@ const Contact = () => {
         <h1>Contacto</h1>
         <p>Puedes contactarnos llenando el formulario a continuación.</p>
 
-        {/* Confirmación de mensaje enviado */}
+     
         {isSubmitted && (
           <p className="confirmation-message">¡Tu mensaje ha sido enviado!</p>
         )}
