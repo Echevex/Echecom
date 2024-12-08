@@ -10,8 +10,8 @@ const CardsContainer = () => {
         <Card 
           image={Card1Image} 
           text="Elige tu diseño favorito con nuestras prendas" 
-          buttonText="Ver prendas inferiores" 
-          buttonLink="/prendas-inferiores" 
+          buttonText="Ver Shorts" 
+          buttonLink="/catalogo/Short" // Cambiado el enlace a la categoría "Shorts"
         />
       </div>
       <div className="card-right">
@@ -19,7 +19,7 @@ const CardsContainer = () => {
           image={Card2Image} 
           text="Una gama amplia de remeras" 
           buttonText="Ver Remeras" 
-          buttonLink="/remeras" 
+          buttonLink="/catalogo/Remera" // Cambiado el enlace a la categoría "Remeras"
         />
       </div>
     </div>

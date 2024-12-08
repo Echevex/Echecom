@@ -7,6 +7,8 @@
   background-color: #f8f8f8;
   border-bottom: 1px solid #b30606;
   position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Logo */
@@ -16,19 +18,20 @@
 
 /* Barra de búsqueda */
 .navbar-search {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: #fffefe;
   border-radius: 25px;
   padding: 5px 10px;
   width: 450px;
   box-shadow: 0 2px 4px rgba(247, 0, 0, 0.582);
+  margin-left: 20px; /* Para separar un poco del logo */
+  margin-right: 20px; /* Para separar un poco de los enlaces */
+  flex-grow: 1; /* Asegura que ocupe el espacio disponible */
 }
 
+/* Input de búsqueda */
 .navbar-search-input {
   flex-grow: 1;
   border: none;
@@ -73,8 +76,7 @@
   font-size: 14px;
 }
 
-
-
+/* Menú de navegación */
 .navbar__menu__list {
   display: flex;
   list-style: none;
@@ -86,6 +88,28 @@
   position: relative; /* Necesario para posicionar el submenú */
   margin: 0 15px;
 }
+
+.navbar-search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.navbar-search-results li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.navbar-search-results li:hover {
+  background-color: #f1f1f1;
+}
+
 
 .navbar__submenu {
   display: block;
@@ -136,126 +160,34 @@
 }
 
 .autocomplete-list {
-  position: absolute; /* La lista estará posicionada dentro de la barra de búsqueda */
-  top: 100%; /* Debajo de la barra de búsqueda */
-  left: 0; /* Alineada con el borde izquierdo de la barra */
-  width: 100%; /* Coincide con el ancho de la barra de búsqueda */
-  list-style: none; /* Elimina los puntos de lista */
-  margin: 0;
-  padding: 0;
-  background-color: #ffffff; /* Fondo blanco */
-  border: 1px solid #ccc; /* Borde ligero */
-  border-radius: 4px; /* Bordes redondeados */
-  z-index: 10; /* Asegura que la lista esté encima de otros elementos */
-  max-height: 200px; /* Define un máximo de altura para evitar que la lista sea demasiado larga */
-  overflow-y: auto; /* Activa el scroll si hay muchos elementos */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Añade una sombra ligera */
-  font-size: 14px; /* Tamaño de texto adecuado */
-}
-
-/* Elementos individuales de la lista */
-.autocomplete-item {
-  padding: 10px 12px; /* Espaciado interno */
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  color: #333; /* Color de texto */
-}
-
-.autocomplete-item:hover {
-  background-color: #f0f0f0; /* Fondo al pasar el mouse */
-}
-
-/* Carrito */
-.navbar__cart {
-  position: relative;
-}
-
-
-.autocomplete-list {
-  position: absolute; 
+  position: absolute;
   top: 100%;
-  left: 0; 
-  width: 100%; 
+  left: 0;
+  width: 100%;
   list-style: none;
   margin: 0;
   padding: 0;
-  background: white;
+  background-color: #ffffff;
   border: 1px solid #ccc;
   border-radius: 4px;
-  z-index: 1000; 
+  z-index: 10;
+  max-height: 200px;
   overflow-y: auto;
-  overflow-x: hidden; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
 }
 
 .autocomplete-item {
   padding: 10px 12px;
   cursor: pointer;
-  font-size: 16px;
+  transition: background-color 0.3s ease;
   color: #333;
-  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .autocomplete-item:hover {
   background-color: #f0f0f0;
-  color: #000;
 }
 
-.navbar-search {
-  position: relative; 
-}
-
-.navbar-search-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  outline: none;
-}
-
-.navbar-search-input:focus {
-  border-color: #007bff; 
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-.navbar__categories {
+.navbar__cart {
   position: relative;
-  cursor: pointer;
 }
-
-.navbar__categories span {
-  font-weight: bold;
-  color: #333;
-}
-
-.navbar__categories:hover span {
-  color: #b30606;
-}
-
-.dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #fff;
-  border: 1px solid #b30606;
-  border-radius: 5px;
-  list-style: none;
-  padding: 10px 0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 10;
-}
-
-.dropdown li {
-  padding: 8px 20px;
-}
-
-.dropdown li a {
-  text-decoration: none;
-  color: #333;
-}
-
-.dropdown li a:hover {
-  color: #b30606;
-}
-

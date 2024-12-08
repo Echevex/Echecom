@@ -1,54 +1,83 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import "./detailProduct.css";
+import { db } from "../services/firebase/index.js";
+import { doc, getDoc } from "firebase/firestore";
 import Navbar from "../components/navbar.jsx";
 import Footer from "../components/Footer.jsx";
+import "./detailProduct.css"; // Importa el CSS con el nombre correcto
 
-const DetailProduct = () => {
-  const { id } = useParams(); // Obtenemos el id del producto desde la URL
-  const [product, setProduct] = useState(null);
+const DetailItem = () => {
+  const { id } = useParams(); // Obtener el ID desde la URL
+  const [item, setItem] = useState(null); // Estado para almacenar los detalles del producto
+  const [loading, setLoading] = useState(true); // Estado para controlar el cargando
 
   useEffect(() => {
-    const storedProducts = JSON.parse(localStorage.getItem("products")) || [];
-    const selectedProduct = storedProducts.find((item) => item.id === parseInt(id));
-    
-    if (selectedProduct) {
-      setProduct(selectedProduct);
-    }
+    const fetchItem = async () => {
+      try {
+        const docRef = doc(db, "productos", id); // Referencia al documento en Firebase
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setItem({ id: docSnap.id, ...docSnap.data() }); // Guardar los datos del producto en el estado
+        } else {
+          console.error("No se encontró el producto");
+        }
+      } catch (error) {
+        console.error("Error al obtener el producto:", error);
+      } finally {
+        setLoading(false); // Finalizar el cargando
+      }
+    };
+
+    fetchItem();
   }, [id]);
 
-  const addToCart = () => {
+  const handleAddToCart = () => {
+    // Obtener el carrito actual desde localStorage o un array vacío si no existe
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const productInCart = cart.find((item) => item.id === product.id);
 
-    if (productInCart) {
-      productInCart.quantity += 1; // Si el producto ya está en el carrito, aumentamos la cantidad
+    // Verificar si el producto ya existe en el carrito
+    const existingProduct = cart.find((item) => item.id === id);
+
+    if (existingProduct) {
+      // Si el producto ya está en el carrito, incrementar la cantidad
+      existingProduct.quantity += 1;
     } else {
-      cart.push({ ...product, quantity: 1 }); // Si el producto no está en el carrito, lo agregamos con cantidad 1
+      // Si el producto no está en el carrito, agregarlo con cantidad 1
+      cart.push({ ...item, quantity: 1 });
     }
 
-    localStorage.setItem("cart", JSON.stringify(cart)); // Guardamos el carrito actualizado en localStorage
-    alert(`${product.name} añadido al carrito`);
+    // Guardar el carrito actualizado en localStorage
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    // Mostrar un mensaje o notificación (opcional)
+    alert(`${item.name} ha sido agregado al carrito.`);
   };
 
-  if (!product) {
-    return <p>Producto no encontrado.</p>;
+  if (loading) {
+    return <div className="loading">Cargando...</div>;
+  }
+
+  if (!item) {
+    return <div className="error">El producto no fue encontrado.</div>;
   }
 
   return (
-    <div className="detail-product-container">
+    <div className="detail-product">
       <Navbar />
-      <div className="detail-product">
-        <div className="detail-product-image">
-          <img src={product.image} alt={product.name} className="product-image" />
+      <div className="detail-product__container">
+        <div className="detail-product__image">
+          <img src={item.img} alt={item.name} />
         </div>
-        <div className="detail-product-info">
-          <h2>{product.name}</h2>
-          <p><strong>Precio:</strong> ${product.price}</p>
-          <p><strong>Categoría:</strong> {product.category}</p>
-          <p><strong>Descripción:</strong> {product.description}</p>
-          <button className="btn-add-to-cart" onClick={addToCart}>
-            Añadir al carrito
+        <div className="detail-product__info">
+          <h1>{item.name}</h1>
+          <p className="detail-product__description">{item.description}</p>
+          <p className="detail-product__price">Precio: ${item.price}</p>
+          <button 
+            className="detail-product__add-to-cart" 
+            onClick={handleAddToCart} // Llamamos a la función al hacer clic
+          >
+            Agregar al carrito
           </button>
         </div>
       </div>
@@ -57,4 +86,4 @@ const DetailProduct = () => {
   );
 };
 
-export default DetailProduct;
+export default DetailItem;

@@ -1,39 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // Para obtener parámetros y redirigir
+import { useParams, useNavigate } from "react-router-dom"; 
 import "./item.css";
 import Navbar from "../components/navbar.jsx";
 import Footer from "../components/Footer.jsx";
-import { loadProductsFromLocalStorage, saveProductsToLocalStorage, products } from "../api/file";
-
-const initializeProducts = () => {
-  if (!localStorage.getItem("products")) {
-    saveProductsToLocalStorage(products);
-  }
-};
+import { db } from "../services/firebase/index.js"; 
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 const Items = () => {
-  const { category } = useParams(); // Obtenemos la categoría desde la URL
+  const { category } = useParams(); 
   const [items, setItems] = useState([]);
-  const navigate = useNavigate(); // Hook para redirigir
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
+  const navigate = useNavigate(); 
 
   useEffect(() => {
-    initializeProducts();
-    const storedProducts = loadProductsFromLocalStorage();
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const collectionRef = category
+          ? query(collection(db, "productos"), where("category", "==", category))
+          : collection(db, "productos");
 
-    if (category) {
-      // Filtramos los productos por la categoría si existe
-      const filteredItems = storedProducts.filter(
-        (item) => item.category.toLowerCase() === category.toLowerCase()
-      );
+        const querySnapshot = await getDocs(collectionRef);
+        const products = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setItems(products);
+      } catch (err) {
+        console.error("Error al obtener los productos:", err);
+        setError("Hubo un problema al cargar los productos. Intenta nuevamente más tarde.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      setItems(filteredItems);
-    } else {
-      // Si no hay categoría, mostramos todos los productos
-      setItems(storedProducts);
-    }
-  }, [category]); // Dependemos de la categoría para recargar los productos
+    fetchData();
+  }, [category]);
 
-  // Función para formatear la categoría (títulos amigables)
+  
   const formatCategoryName = (categoryName) => {
     return categoryName
       .split(" ")
@@ -41,9 +47,9 @@ const Items = () => {
       .join(" ");
   };
 
-  // Manejar clic en una tarjeta para redirigir al detalle
+  
   const handleCardClick = (id) => {
-    navigate(`/detailItem/${id}`); // Redirigir al detalle del producto
+    navigate(`/detailItem/${id}`); 
   };
 
   return (
@@ -54,33 +60,41 @@ const Items = () => {
           ? `Productos de ${formatCategoryName(category)}`
           : "Todos los productos"}
       </h1>
-      <div className="items-grid">
-        {items.length > 0 ? (
-          items.map((item) => (
-            <div
-              key={item.id}
-              className="card"
-              onClick={() => handleCardClick(item.id)} // Redirigir al hacer clic
-              style={{ cursor: "pointer" }} // Indicador visual de que es clicable
-            >
-              <img src={item.image} alt={item.name} className="card-image" />
-              <div className="card-content">
-                <h3>{item.name}</h3>
-                <p>Precio: {item.price}</p>
-                <p>Categoría: {item.category}</p>
+
+      {loading ? (
+        <p>Cargando productos...</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
+        <div className="items-grid">
+          {items.length > 0 ? (
+            items.map((item) => (
+              <div
+                key={item.id}
+                className="card"
+                onClick={() => handleCardClick(item.id)} 
+                style={{ cursor: "pointer" }} 
+              >
+                <img src={item.img} alt={item.name} className="card-image" />
+                <div className="card-content">
+                  <h3>{item.name}</h3>
+                  <p>Precio: ${item.price}</p>
+                  <p>Categoría: {formatCategoryName(item.category)}</p>
+                </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <p>
-            {category
-              ? `No hay productos disponibles en la categoría "${formatCategoryName(
-                  category
-                )}".`
-              : "No hay productos disponibles."}
-          </p>
-        )}
-      </div>
+            ))
+          ) : (
+            <p>
+              {category
+                ? `No hay productos disponibles en la categoría "${formatCategoryName(
+                    category
+                  )}".`
+                : "No hay productos disponibles."}
+            </p>
+          )}
+        </div>
+      )}
+
       <Footer />
     </div>
   );

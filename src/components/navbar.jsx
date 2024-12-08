@@ -1,14 +1,32 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { db } from "../services/firebase/index";  // Asegúrate de que tu configuración de Firebase esté correctamente importada
+import { collection, getDocs, query, where } from "firebase/firestore";
 import "./navbar.css";
 import logo from "../assets/logo.png";
 
-// Función para buscar productos
-const buscarItems = (termino) => {
-  const items = JSON.parse(localStorage.getItem("products")) || [];
-  return items.filter((item) =>
-    item.name.toLowerCase().includes(termino.toLowerCase())
-  );
+// Función para obtener los productos desde Firebase
+const fetchItemsFromFirebase = async (searchTerm = "") => {
+  const productsRef = collection(db, "products"); // Asegúrate de que "products" sea el nombre correcto de tu colección
+  let q;
+
+  if (searchTerm) {
+    q = query(
+      productsRef,
+      where("name", ">=", searchTerm),
+      where("name", "<=", searchTerm + "\uf8ff")
+    );
+  } else {
+    q = query(productsRef); // Si no hay término de búsqueda, obtiene todos los productos
+  }
+
+  const querySnapshot = await getDocs(q);
+  const items = querySnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  return items;
 };
 
 const Navbar = () => {
@@ -18,28 +36,22 @@ const Navbar = () => {
   const [showSubmenu, setShowSubmenu] = useState(false); // Para controlar el submenú
   const navigate = useNavigate();
 
+  // Cargar productos desde Firebase
   useEffect(() => {
-    if (searchTerm) {
-      const results = buscarItems(searchTerm);
-      setFilteredItems(results);
-    } else {
-      setFilteredItems([]);
-    }
+    const fetchData = async () => {
+      const products = await fetchItemsFromFirebase(searchTerm);
+      setFilteredItems(products);
+    };
+    fetchData();
+
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     setCartCount(cart.length);
   }, [searchTerm]);
 
   // Función para manejar la búsqueda
-  const handleSearch = () => {
-    const items = JSON.parse(localStorage.getItem("products")) || [];
-    const selectedItem = items.find(
-      (item) => item.name.toLowerCase() === searchTerm.toLowerCase()
-    );
-    if (selectedItem) {
-      navigate(`/detailItem/${selectedItem.id}`);
-    } else {
-      alert("Ítem no encontrado");
-    }
+  const handleSearch = async () => {
+    const products = await fetchItemsFromFirebase(searchTerm);
+    setFilteredItems(products); // Actualiza los resultados al presionar "Buscar"
   };
 
   return (
@@ -67,6 +79,20 @@ const Navbar = () => {
           </span>
           <button onClick={handleSearch}>Buscar</button>
         </div>
+
+        {/* Mostrar los resultados de búsqueda */}
+        {filteredItems.length > 0 && (
+          <ul className="navbar-search-results">
+            {filteredItems.map((item) => (
+              <li key={item.id}>
+                <Link to={`/detailItem/${item.id}`}>
+                  {item.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+
         <ul className="navbar__menu__list">
           <li>
             <Link to="/">Inicio</Link>
@@ -80,16 +106,16 @@ const Navbar = () => {
             {showSubmenu && (
               <ul className="navbar__submenu">
                 <li>
-                  <Link to="/catalogo/buzos">Buzos</Link>
+                  <Link to="/catalogo/Buzo">Buzos</Link>
                 </li>
                 <li>
-                  <Link to="/catalogo/remeras">Remeras</Link>
+                  <Link to="/catalogo/Remera">Remeras</Link>
                 </li>
                 <li>
-                  <Link to="/catalogo/pantalones">Pantalones</Link>
+                  <Link to="/catalogo/Pantalon">Pantalones</Link>
                 </li>
                 <li>
-                  <Link to="/catalogo/shorts">Shorts</Link>
+                  <Link to="/catalogo/Short">Shorts</Link>
                 </li>
               </ul>
             )}
